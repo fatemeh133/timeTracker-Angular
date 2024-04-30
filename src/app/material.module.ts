@@ -7,6 +7,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [],
@@ -18,6 +22,10 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatDividerModule,
     MatButtonModule,
     MatDatepickerModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule,
   ],
   exports: [
     CommonModule,
@@ -27,6 +35,10 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatDividerModule,
     MatButtonModule,
     MatDatepickerModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule,
   ],
   providers: [provideNativeDateAdapter()],
 })

@@ -1,0 +1,10 @@
+* {
+  direction: rtl;
+  text-align: right;
+}
+::ng-deep .mat-mdc-paginator-page-size {
+  direction: ltr;
+}
+td {
+  text-align: right;
+}

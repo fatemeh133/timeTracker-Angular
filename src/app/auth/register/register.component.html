@@ -1,0 +1,42 @@
+<h2 class="title-text">ثبت نام</h2>
+<form class="d-flex flex-column register-form">
+  <mat-form-field>
+    <mat-label>نام </mat-label>
+    <input matInput />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>کدملی </mat-label>
+    <input matInput type="number" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>نام کاربری</mat-label>
+    <input matInput />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label class="padding-input-rtl">تاریخ تولد</mat-label>
+    <input
+      class="padding-input-rtl"
+      matInput
+      [matDatepicker]="picker"
+      ngModel
+      name="birthday"
+      required
+    />
+    <mat-hint>روز/ماه/سال</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>رمز عبور</mat-label>
+    <input matInput />
+  </mat-form-field>
+
+  <section>
+    <button mat-flat-button color="primary" class="mx-auto">ثبت نام</button>
+  </section>
+  <a routerLink="/login" class="text-center mt-3">
+    ثبت نام کرده اید؟ وارد شوید</a
+  >
+</form>
