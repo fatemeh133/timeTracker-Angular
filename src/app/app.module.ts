@@ -10,10 +10,12 @@ import { LoginComponent } from './auth/login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { TaskComponent } from './task/task.component';
 import { HomeComponent } from './home/home.component';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [AppComponent, RegisterComponent, LoginComponent, HeaderComponent, TaskComponent, HomeComponent],
-  imports: [BrowserModule, AppRoutingModule, MaterialModule],
+  imports: [BrowserModule, AppRoutingModule, MaterialModule,ReactiveFormsModule,FormsModule],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
 })
