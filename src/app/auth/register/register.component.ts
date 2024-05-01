@@ -20,6 +20,7 @@ export class RegisterComponent implements OnInit {
     password: '',
   };
   usernames: string[] = [];
+  codemelies: number[] = [];
   ngOnInit() {
     this.reactiveForm = new FormGroup({
       name: new FormControl('', Validators.required),
@@ -37,7 +38,14 @@ export class RegisterComponent implements OnInit {
           this.usernames.push(res[i].userName);
         }
       }
+      for (var i = 0; i < res.length; i++) {
+        if (res[i] && res[i].codeMeli) {
+          console.log(res[i].codeMeli);
+          this.codemelies.push(res[i].codeMeli);
+        }
+      }
       console.log(this.usernames);
+      console.log(this.codemelies);
     });
   }
 
@@ -52,7 +60,9 @@ export class RegisterComponent implements OnInit {
 
     this.userService.getUser().subscribe((res) => {
       if (this.usernames.includes(this.user.userName)) {
-        console.log('user exists');
+        alert('user exists');
+      } else if (this.codemelies.includes(this.user.codeMeli)) {
+        alert('codemeli exists');
       } else {
         this.userService.postUser(this.user).subscribe((res) => {
           console.log('res from post after if', res);
