@@ -8,10 +8,21 @@
   margin: 30px auto 0 auto;
   direction: rtl;
 }
+
+@media (max-width: 576px) {
+  .register-form {
+    max-width: 100%;
+  }
+}
+
 button {
   display: block;
 }
 
 .padding-input-rtl {
   padding-right: 15px !important;
+}
+
+::ng-deep .mat-calendar {
+  direction: rtl;
 }

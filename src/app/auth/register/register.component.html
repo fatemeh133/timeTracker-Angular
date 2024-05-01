@@ -1,12 +1,13 @@
 <h2 class="title-text">ثبت نام</h2>
 <form
-  class="d-flex flex-column register-form"
+  class="d-flex flex-column register-form "
   [formGroup]="reactiveForm"
   (submit)="onSubmit(reactiveForm)"
 >
   <mat-form-field>
     <mat-label>نام </mat-label>
     <input matInput minlength="3" maxlength="100" formControlName="name" />
+
     @if (reactiveForm.get('name')?.hasError('required')) {
     <mat-error>نام نمی تواند خالی باشد</mat-error>
     } @if (reactiveForm.get('name')?.hasError('minlength')) {
@@ -17,16 +18,18 @@
   <mat-form-field>
     <mat-label>کدملی </mat-label>
     <input matInput type="number" formControlName="codeMeli" />
+
     @if (reactiveForm.get('codeMeli')?.hasError('required')) {
     <mat-error>کدملی نمی تواند خالی باشد</mat-error>
-    } @if (reactiveForm.get('codeMeli')?.hasError('codeMeliValidator')) {
-    <mat-error>کدملی نامعتبر </mat-error>
-    }
+    }@if(reactiveForm.get('codeMeli')?.hasError('codeMeliValidator')){<mat-error
+      >کدملی نامعتبر </mat-error
+    >}
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>نام کاربری</mat-label>
     <input matInput minlength="3" maxlength="100" formControlName="userName" />
+
     @if (reactiveForm.get('userName')?.hasError('required')) {
     <mat-error>نام کاربری نمی تواند خالی باشد</mat-error>
     }@if (reactiveForm.get('userName')?.hasError('minlength')) {
@@ -45,6 +48,7 @@
       name="birthday"
       formControlName="birthDate"
     />
+
     @if (reactiveForm.get('birthDate')?.hasError('required')) {
     <mat-error>تاریخ تولد نمی تواند خالی باشد</mat-error>
     }
@@ -56,6 +60,7 @@
   <mat-form-field>
     <mat-label>رمز عبور</mat-label>
     <input matInput minlength="6" formControlName="password" />
+
     @if (reactiveForm.get('password')?.hasError('required')) {
     <mat-error>رمز عبور نمی تواند خالی باشد</mat-error>
     }@if (reactiveForm.get('password')?.hasError('minlength')) {

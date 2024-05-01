@@ -21,6 +21,8 @@ import {
   PERSIAN_DATE_FORMATS,
 } from './persian-date-adapter';
 
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +38,7 @@ import {
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [
     {
