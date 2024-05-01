@@ -11,4 +11,7 @@ export class ConnectionService {
   getUser() {
     return this.http.get<User[]>(this.url);
   }
+  postUser(user: User) {
+    return this.http.post<User>(this.url, user);
+  }
 }

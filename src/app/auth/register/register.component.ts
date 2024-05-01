@@ -12,6 +12,14 @@ import { User } from '../../services/user';
 export class RegisterComponent implements OnInit {
   constructor(private userService: ConnectionService) {}
   reactiveForm!: FormGroup;
+  user: User = {
+    nameOfUser: '',
+    codeMeli: 0,
+    userName: '',
+    birthDate: '',
+    password: '',
+  };
+  usernames: string[] = [];
   ngOnInit() {
     this.reactiveForm = new FormGroup({
       name: new FormControl('', Validators.required),
@@ -22,15 +30,35 @@ export class RegisterComponent implements OnInit {
     });
 
     this.userService.getUser().subscribe((res) => {
-      console.log(res);
+      console.log('get res oninit', res);
+      for (var i = 0; i < res.length; i++) {
+        if (res[i] && res[i].userName) {
+          console.log(res[i].userName);
+          this.usernames.push(res[i].userName);
+        }
+      }
+      console.log(this.usernames);
     });
   }
 
   onSubmit(form: FormGroup) {
-    console.log('name', form.controls['name'].value);
-    console.log('codeMeli', form.controls['codeMeli'].value);
-    console.log('password', form.controls['password'].value);
-    console.log('birthDate', form.controls['birthDate'].value['_d']);
-    console.log('userName', form.controls['userName'].value);
+    this.user.nameOfUser = form.controls['name'].value;
+    this.user.codeMeli = form.controls['codeMeli'].value;
+    this.user.password = form.controls['password'].value;
+    this.user.birthDate = form.controls['birthDate'].value['_d'].toString();
+    this.user.userName = form.controls['userName'].value;
+
+    console.log('user details sent to form', this.user);
+
+    this.userService.getUser().subscribe((res) => {
+      if (this.usernames.includes(this.user.userName)) {
+        console.log('user exists');
+      } else {
+        this.userService.postUser(this.user).subscribe((res) => {
+          console.log('res from post after if', res);
+        });
+        form.reset();
+      }
+    });
   }
 }
