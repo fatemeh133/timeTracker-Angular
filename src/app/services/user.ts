@@ -1,9 +1,8 @@
 export interface User {
   userId?: number;
-  nameOfUser: string;
-  codeMeli: number;
+  NameOfUser: string;
+  codeMeli: string;
   userName: string;
-  birthDate:string
+  birthDate: string;
   password: string;
-
 }
