@@ -34,8 +34,10 @@ export class LoginComponent implements OnInit {
           res[i].password === form.controls['password'].value
         ) {
           this.isLogged = true;
+          this.userService.authchange.next(this.isLogged)
         } else {
           this.isLogged = false;
+          this.userService.authchange.next(this.isLogged)
         }
       }
       if (this.isLogged == true) {

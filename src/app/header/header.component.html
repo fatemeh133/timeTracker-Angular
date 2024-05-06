@@ -1,9 +1,19 @@
 <header class="d-flex justify-content-end pe-5">
-  <button mat-button class="menu-btn" routerLink="/home">خروج</button>
-  <button mat-button class="menu-btn" routerLink="/register">
+  <button
+    mat-button
+    class="menu-btn"
+    routerLink="/home"
+    *ngIf="isLogedin"
+    (click)="onExit()"
+  >
+    خروج
+  </button>
+  <button mat-button class="menu-btn" routerLink="/register" *ngIf="!isLogedin">
     ثبت نام/ورود
   </button>
-  <button mat-button class="menu-btn" routerLink="/task">وظایف</button>
+  <button mat-button class="menu-btn" routerLink="/task" *ngIf="isLogedin">
+    وظایف
+  </button>
 
   <button mat-button class="menu-btn" routerLink="/home">خانه</button>
 </header>

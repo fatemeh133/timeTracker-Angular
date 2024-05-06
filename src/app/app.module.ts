@@ -22,6 +22,8 @@ import {
 } from './persian-date-adapter';
 
 import { HttpClientModule } from '@angular/common/http';
+import { authGuard } from './services/auth.guard';
+import { ConnectionService } from './services/connection.service';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { HttpClientModule } from '@angular/common/http';
     },
     { provide: MAT_DATE_FORMATS, useValue: PERSIAN_DATE_FORMATS },
     provideAnimationsAsync(),
+    ConnectionService,
   ],
   bootstrap: [AppComponent],
 })
