@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { codeMeliValidator } from '../../validator/CodeMeli.validator';
 import { ConnectionService } from '../../services/connection.service';
 import { User } from '../../services/user';
+import moment from 'jalali-moment';
 
 @Component({
   selector: 'app-register',
@@ -11,16 +12,19 @@ import { User } from '../../services/user';
 })
 export class RegisterComponent implements OnInit {
   constructor(private userService: ConnectionService) {}
+
   reactiveForm!: FormGroup;
   user: User = {
-    NameOfUser: '',
+    nameofuser: '',
     codeMeli: '',
     userName: '',
     birthDate: '',
     password: '',
   };
+
   usernames: string[] = [];
   codemelies: string[] = [];
+
   ngOnInit() {
     this.reactiveForm = new FormGroup({
       name: new FormControl('', Validators.required),
@@ -34,10 +38,14 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    this.user.NameOfUser = form.controls['name'].value;
+    this.user.nameofuser = form.controls['name'].value;
     this.user.codeMeli = form.controls['codeMeli'].value.toString();
     this.user.password = form.controls['password'].value;
-    this.user.birthDate = form.controls['birthDate'].value['_d'].toString();
+
+    const jsDate = form.controls['birthDate'].value['_d'].toString();
+    const persianDate = moment(jsDate).format('jYYYY/jMM/jDD');
+
+    this.user.birthDate = persianDate;
     this.user.userName = form.controls['userName'].value;
 
     console.log('user details sent to form', this.user);
@@ -49,8 +57,12 @@ export class RegisterComponent implements OnInit {
     } else {
       this.userService.postUser(this.user).subscribe((res) => {
         console.log('res from post after if', res);
+        form.reset();
+        // Object.keys(form.controls).forEach((key) => {
+        //   form.controls[key].setErrors(null);
+        //   form.controls[key].markAsUntouched();
+        // });
       });
-      form.reset();
     }
   }
 

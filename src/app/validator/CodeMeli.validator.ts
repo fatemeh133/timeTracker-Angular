@@ -3,7 +3,11 @@ import { FormControl, ValidationErrors } from '@angular/forms';
 export function codeMeliValidator(
   control: FormControl
 ): ValidationErrors | null {
-  const code = control.value.toString();
+  const code = control.value;
+
+  if (code == null || code === '') {
+    return { require: true };
+  }
 
   if (!checkCodeMeli(code)) return { codeMeliValidator: true };
   return null;

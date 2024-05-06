@@ -1,6 +1,6 @@
 export interface User {
   userId?: number;
-  NameOfUser: string;
+  nameofuser: string;
   codeMeli: string;
   userName: string;
   birthDate: string;

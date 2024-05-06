@@ -1,17 +1,28 @@
 <h2 class="title-text">ورود</h2>
-<form class="d-flex flex-column register-form">
+<form
+  class="d-flex flex-column register-form"
+  [formGroup]="reactiveForm"
+  (submit)="onSubmit(reactiveForm)"
+>
   <mat-form-field>
     <mat-label>نام کاربری</mat-label>
-    <input matInput />
+    <input matInput formControlName="name" />
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>رمز عبور</mat-label>
-    <input matInput />
+    <input matInput formControlName="password" />
   </mat-form-field>
 
   <section>
-    <button mat-flat-button color="primary" class="mx-auto">ورود</button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="mx-auto"
+      [disabled]="reactiveForm.invalid"
+    >
+      ورود
+    </button>
   </section>
 
   <a routerLink="/register" class="text-center mt-3">
