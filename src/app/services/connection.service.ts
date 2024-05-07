@@ -28,4 +28,5 @@ export class ConnectionService {
   getTask() {
     return this.http.get<Task[]>(this.taskUrl);
   }
+  postTask(){}
 }

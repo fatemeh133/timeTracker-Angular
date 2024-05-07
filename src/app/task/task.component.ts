@@ -12,13 +12,23 @@ import { Subject } from 'rxjs';
   styleUrl: './task.component.css',
 })
 export class TaskComponent implements AfterViewInit, OnInit {
-  userIdRecived!: number | null;
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     private service: ConnectionService
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+  userIdRecived!: number | null;
+  displayedColumns: string[] = ['taskName', 'duration'];
+  dataSource = new MatTableDataSource<PeriodicElement>();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
     this.service.logedUserId.subscribe((userId) => {
       console.log('loged user id', userId);
       this.userIdRecived = userId;
@@ -28,20 +38,15 @@ export class TaskComponent implements AfterViewInit, OnInit {
       for (let i = 0; i < res.length; i++) {
         if (this.userIdRecived == res[i].userId) {
           console.log(res[i].taskName, res[i].duration);
+          ELEMENT_DATA.push({
+            taskName: res[i].taskName,
+            duration: res[i].duration,
+          });
         }
       }
+      console.log(ELEMENT_DATA);
+      this.dataSource.data = ELEMENT_DATA;
     });
-  }
-
-  displayedColumns: string[] = ['taskName', 'duration'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   announceSortChange(sortState: Sort) {
@@ -55,6 +60,6 @@ export class TaskComponent implements AfterViewInit, OnInit {
 
 export interface PeriodicElement {
   duration: string;
-  taskName: number;
+  taskName: string;
 }
-const ELEMENT_DATA: PeriodicElement[] = [{ taskName: 1, duration: 'Hydrogen' }];
+const ELEMENT_DATA: PeriodicElement[] = [];
