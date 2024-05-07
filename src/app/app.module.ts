@@ -22,7 +22,6 @@ import {
 } from './persian-date-adapter';
 
 import { HttpClientModule } from '@angular/common/http';
-import { authGuard } from './services/auth.guard';
 import { ConnectionService } from './services/connection.service';
 
 @NgModule({

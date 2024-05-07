@@ -55,13 +55,17 @@ export class RegisterComponent implements OnInit {
     } else if (this.codemelies.includes(this.user.codeMeli)) {
       alert('کد ملی تکراری');
     } else {
-      this.userService.postUser(this.user).subscribe((res) => {
-        console.log('res from post after if', res);
-        form.reset();
-        // Object.keys(form.controls).forEach((key) => {
-        //   form.controls[key].setErrors(null);
-        //   form.controls[key].markAsUntouched();
-        // });
+      this.userService.postUser(this.user).subscribe({
+        next: (res) => {
+          console.log('res from post after if', res);
+        },
+        complete: () => {
+          form.reset();
+          alert('کاربر ثبت نام شد،لطفا وارد شوید');
+        },
+        error: (err) => {
+          alert(err.message);
+        },
       });
     }
   }
