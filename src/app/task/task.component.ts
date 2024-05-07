@@ -5,6 +5,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ConnectionService } from '../services/connection.service';
 import { Subject } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-task',
@@ -16,16 +17,26 @@ export class TaskComponent implements AfterViewInit, OnInit {
     private _liveAnnouncer: LiveAnnouncer,
     private service: ConnectionService
   ) {}
-
-  ngOnInit() {}
   userIdRecived!: number | null;
   displayedColumns: string[] = ['taskName', 'duration'];
   dataSource = new MatTableDataSource<PeriodicElement>();
+  reactiveForm!: FormGroup;
+  ELEMENT_DATA: PeriodicElement[] = [];
+
+  ngOnInit() {
+    this.reactiveForm = new FormGroup({
+      taskName: new FormControl('', Validators.required),
+    });
+  }
+  onsubmit(form: FormGroup) {
+    console.log(form.controls['taskName'].value);
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
+    this.ELEMENT_DATA = [];
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -38,14 +49,14 @@ export class TaskComponent implements AfterViewInit, OnInit {
       for (let i = 0; i < res.length; i++) {
         if (this.userIdRecived == res[i].userId) {
           console.log(res[i].taskName, res[i].duration);
-          ELEMENT_DATA.push({
+          this.ELEMENT_DATA.push({
             taskName: res[i].taskName,
             duration: res[i].duration,
           });
         }
       }
-      console.log(ELEMENT_DATA);
-      this.dataSource.data = ELEMENT_DATA;
+      console.log(this.ELEMENT_DATA);
+      this.dataSource.data = this.ELEMENT_DATA;
     });
   }
 
@@ -62,4 +73,3 @@ export interface PeriodicElement {
   duration: string;
   taskName: string;
 }
-const ELEMENT_DATA: PeriodicElement[] = [];

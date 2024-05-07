@@ -1,17 +1,19 @@
 <section class="task-header mt-4">
   <div class="container text-center">
     <div class="row">
-      <div class="col-10">
-        <mat-form-field class="w-100">
-          <mat-label>وظیفه مورد نظر را وارد کنید </mat-label>
-          <input matInput />
-        </mat-form-field>
-      </div>
-      <div class="col-2">
-        <button mat-flat-button color="primary" class="mx-auto w-100 h-75">
-          اضافه کردن
-        </button>
-      </div>
+      <form [formGroup]="reactiveForm" (submit)="onsubmit(reactiveForm)">
+        <div class="col-10">
+          <mat-form-field class="w-100">
+            <mat-label>وظیفه مورد نظر را وارد کنید </mat-label>
+            <input matInput formControlName="taskName" />
+          </mat-form-field>
+        </div>
+        <div class="col-2">
+          <button mat-flat-button color="primary" class="mx-auto w-100 h-75">
+            اضافه کردن
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </section>

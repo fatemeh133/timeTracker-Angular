@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   Passwords: string[] = [];
   reactiveForm!: FormGroup;
   isLogged = false;
+  id!: number;
 
   constructor(private userService: ConnectionService, private router: Router) {}
 
@@ -26,29 +27,29 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    this.userService.getUser().subscribe((res) => {
-      for (var i = 0; i < res.length; i++) {
-        if (
-          res[i] &&
-          res[i].userName === form.controls['name'].value &&
-          res[i].password === form.controls['password'].value
-        ) {
-          this.isLogged = true;
-          this.userService.authchange.next(this.isLogged);
-          const id: number = res[i].userId!;
-          this.userService.logedUserId.next(id);
-        } else {
-          this.isLogged = false;
-          this.userService.authchange.next(this.isLogged);
+    this.userService.getUser().subscribe({
+      next: (res) => {
+        for (var i = 0; i < res.length; i++) {
+          if (
+            res[i].userName === form.controls['name'].value &&
+            res[i].password === form.controls['password'].value
+          ) {
+            this.isLogged = true;
+            this.id = res[i].userId!;
+          }
+          console.log(this.isLogged);
         }
-      }
-      if (this.isLogged === true) {
-        alert('وارد شدید');
 
-        this.router.navigate(['/task']);
-      } else {
-        alert('کاربری بااین مشخصات وجود ندارد');
-      }
+        this.userService.logedUserId.next(this.id);
+        this.userService.authchange.next(this.isLogged);
+      },
+      complete: () => {
+        if (this.isLogged == true) {
+          this.router.navigate(['/task']);
+        } else {
+          alert('کاربری بااین مشخصات وجود ندارد');
+        }
+      },
     });
   }
 
