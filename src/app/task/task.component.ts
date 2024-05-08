@@ -38,6 +38,9 @@ export class TaskComponent implements AfterViewInit, OnInit {
     });
   }
   onsubmit(form: FormGroup) {
+    this.task = { taskId: 0, userId: 0, taskName: '', duration: '0' };
+    console.log('task', this.task);
+
     this.task.taskName = form.controls['taskName'].value;
     this.service.logedUserId.subscribe((logedUserId) => {
       this.task.userId = logedUserId!;
