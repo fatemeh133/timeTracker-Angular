@@ -7,10 +7,14 @@ import { HomeComponent } from './home/home.component';
 import { authGuard, Premissionservices } from './services/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'task', component: TaskComponent, canActivate: [authGuard] },
+  {
+    path: 'task',
+    component: TaskComponent,
+    canActivate: [authGuard]
+  },
   { path: 'home', component: HomeComponent },
 ];
 

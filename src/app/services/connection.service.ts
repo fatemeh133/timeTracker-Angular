@@ -31,4 +31,10 @@ export class ConnectionService {
   postTask(task: Task) {
     return this.http.post<Task[]>(this.taskUrl, task);
   }
+  deleteTask(id: number) {
+    return this.http.delete<number>(this.taskUrl + '/' + id);
+  }
+  updateTask(id: number, task: Task) {
+    return this.http.put<Task>(this.taskUrl + '/' + id, task);
+  }
 }
