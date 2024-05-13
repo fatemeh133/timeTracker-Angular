@@ -4,7 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "timeTracker-Angular": {
-      "projectType": "application",
+      "projectType": "application", 
       "schematics": {
         "@schematics/angular:component": {
           "standalone": false

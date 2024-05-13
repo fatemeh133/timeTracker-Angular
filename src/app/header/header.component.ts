@@ -19,5 +19,9 @@ export class HeaderComponent implements OnInit {
 
   onExit() {
     this.service.authchange.next(false);
+    localStorage.removeItem('authchange');
+
+    localStorage.removeItem('logedUserId');
+    this.service.logedUserId.next(null);
   }
 }

@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
+  reactiveForm!: FormGroup;
   usernames: string[] = [];
   Passwords: string[] = [];
-  reactiveForm!: FormGroup;
   isLogged = false;
   id!: number;
 
@@ -24,6 +24,9 @@ export class LoginComponent implements OnInit {
       name: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
     });
+  }
+  ngDoCheck() {
+    this.userService.getFromStorage();
   }
 
   onSubmit(form: FormGroup) {
@@ -42,6 +45,9 @@ export class LoginComponent implements OnInit {
 
         this.userService.logedUserId.next(this.id);
         this.userService.authchange.next(this.isLogged);
+        //save being loged in in storage
+        localStorage.setItem('logedUserId', this.id.toString());
+        localStorage.setItem('authchange', this.isLogged.toString());
       },
       complete: () => {
         if (this.isLogged == true) {

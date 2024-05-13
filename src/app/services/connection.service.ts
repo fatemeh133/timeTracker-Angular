@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { User } from './user';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Task } from './task';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class ConnectionService {
     number | null
   >(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router:Router) {}
 
   getUser() {
     return this.http.get<User[]>(this.userUrl);
@@ -36,5 +37,19 @@ export class ConnectionService {
   }
   updateTask(id: number, task: Task) {
     return this.http.put<Task>(this.taskUrl + '/' + id, task);
+  }
+
+  getFromStorage() {
+    //access to local storage and see if user is loged in
+    if (localStorage.getItem('authchange')) {
+      this.authchange.next(true);
+
+      this.logedUserId.next(
+        Number(localStorage.getItem('logedUserId'))
+      );
+      this.router.navigate(['/task']);
+    } else {
+      this.authchange.next(false);
+    }
   }
 }

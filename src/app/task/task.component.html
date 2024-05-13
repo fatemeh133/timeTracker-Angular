@@ -69,7 +69,7 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>حذف</th>
         <td mat-cell *matCellDef="let element">
-          <span (click)="onDelete(element.taskId)">❌</span>
+          <span (click)="onDelete(element.taskId)" class="closeIcon">❌</span>
         </td>
       </ng-container>
       <ng-container matColumnDef="taskId">
