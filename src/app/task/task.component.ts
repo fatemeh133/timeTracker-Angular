@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ConnectionService } from '../services/connection.service';
-import { Subject } from 'rxjs';
+import { interval, Subject, Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Task } from '../services/task';
 
@@ -19,7 +19,13 @@ export class TaskComponent implements AfterViewInit, OnInit {
     private service: ConnectionService
   ) {}
   userIdRecived!: number | null;
-  displayedColumns: string[] = ['taskName', 'duration', 'delete', 'taskId'];
+  displayedColumns: string[] = [
+    'taskName',
+    'duration',
+    'timeRecord',
+    'delete',
+    'taskId',
+  ];
   dataSource = new MatTableDataSource<PeriodicElement>();
   reactiveForm!: FormGroup;
   ELEMENT_DATA: PeriodicElement[] = [];
@@ -49,6 +55,13 @@ export class TaskComponent implements AfterViewInit, OnInit {
     this.service.postTask(this.task).subscribe((res) => {
       console.log(res);
       this.fillTalbeByUserTasks();
+      // this.timers.push({
+      //   timerValue: Number(res[i].duration),
+      //   timerSubscription: new Subscription(),
+      //   isTimerRunning: false,
+      // });
+
+      console.log('timerrrrr', this.timers);
       form.reset();
     });
   }
@@ -73,6 +86,7 @@ export class TaskComponent implements AfterViewInit, OnInit {
   fillTalbeByUserTasks() {
     this.service.getTask().subscribe((res) => {
       this.ELEMENT_DATA = [];
+      this.timers = [];
       for (let i = 0; i < res.length; i++) {
         if (this.userIdRecived == res[i].userId) {
           console.log(res[i].taskName, res[i].duration, res[i].taskId);
@@ -83,6 +97,12 @@ export class TaskComponent implements AfterViewInit, OnInit {
             delete: '',
             taskId: res[i].taskId!,
           });
+          this.timers.push({
+            timerValue: Number(res[i].duration),
+            timerSubscription: new Subscription(),
+            isTimerRunning: false,
+          });
+          // console.log('timers', this.timers);
         }
       }
       this.dataSource.data = this.ELEMENT_DATA;
@@ -91,6 +111,20 @@ export class TaskComponent implements AfterViewInit, OnInit {
 
   updateTaskName(event: any, duration: any, id: any) {
     this.task.taskName = event.innerText;
+    this.task.duration = duration;
+    this.task.taskId = id;
+    this.service.logedUserId.subscribe((res) => {
+      this.task.userId = res!;
+    });
+
+    console.log('task', this.task);
+    this.service.updateTask(id, this.task).subscribe(() => {
+      this.fillTalbeByUserTasks();
+    });
+  }
+
+  updateDurationByRecord(name: any, duration: any, id: any) {
+    this.task.taskName = name.taskName;
     this.task.duration = duration;
     this.task.taskId = id;
     this.service.logedUserId.subscribe((res) => {
@@ -123,6 +157,43 @@ export class TaskComponent implements AfterViewInit, OnInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  timers: {
+    timerValue: number;
+    timerSubscription: Subscription;
+    isTimerRunning: boolean;
+  }[] = [];
+
+  toggleTimer(index: number, name: any, id: any) {
+    if (this.timers[index].isTimerRunning) {
+      // Stop the timer
+      this.timers[index].timerSubscription.unsubscribe();
+
+      this.updateDurationByRecord(
+        name,
+        this.timers[index].timerValue.toString(),
+        id
+      );
+    } else {
+      // Start the timer
+      this.timers[index].timerSubscription = interval(1000).subscribe(() => {
+        this.timers[index].timerValue++;
+        this.ELEMENT_DATA[index].duration =
+          this.timers[index].timerValue.toString();
+      });
+    }
+    // Toggle the timer state
+    this.timers[index].isTimerRunning = !this.timers[index].isTimerRunning;
+  }
+
+  ngOnDestroy() {
+    // Unsubscribe from all timer subscriptions
+    this.timers.forEach((timer) => {
+      if (timer.timerSubscription) {
+        timer.timerSubscription.unsubscribe();
+      }
+    });
   }
 }
 

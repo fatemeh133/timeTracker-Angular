@@ -26,6 +26,7 @@
     </div>
   </div>
 </section>
+
 <section>
   <div class="mat-elevation-z8">
     <table
@@ -49,18 +50,40 @@
           {{ element.taskName }}
         </td>
       </ng-container>
-
+      <!-- time Column -->
+      <ng-container matColumnDef="timeRecord">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ضبط</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <div
+            (click)="toggleTimer(i, element, element.taskId)"
+            class="cursorPointer"
+          >
+            @if (timers[i].isTimerRunning) {<img
+              src="https://cdn-icons-png.flaticon.com/512/666/666170.png"
+              style="width: 30px"
+              alt="pause"
+            />} @else {
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/109/109197.png"
+              style="width: 30px"
+              alt="play"
+            />
+            }
+          </div>
+        </td>
+      </ng-container>
       <!-- duration Column -->
       <ng-container matColumnDef="duration">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>طول انجام</th>
         <td
           mat-cell
-          *matCellDef="let element"
+          *matCellDef="let element; let i = index"
           contenteditable="true"
           (blur)="
             updateDuration($event.srcElement, element.taskName, element.taskId)
           "
         >
+          <div>{{ timers[i].timerValue }} ثانیه</div>
           {{ element.duration }}
         </td>
       </ng-container>
@@ -69,7 +92,12 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>حذف</th>
         <td mat-cell *matCellDef="let element">
-          <span (click)="onDelete(element.taskId)" class="closeIcon">❌</span>
+          <span (click)="onDelete(element.taskId)" class="cursorPointer"
+            ><img
+              src="https://cdn-icons-png.flaticon.com/512/4476/4476210.png"
+              alt="close"
+              style="width: 30px"
+          /></span>
         </td>
       </ng-container>
       <ng-container matColumnDef="taskId">
