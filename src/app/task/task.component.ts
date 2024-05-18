@@ -6,7 +6,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ConnectionService } from '../services/connection.service';
 import { interval, Subject, Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Task } from '../services/task';
+import { Task } from '../models/task';
 
 @Component({
   selector: 'app-task',
@@ -55,13 +55,6 @@ export class TaskComponent implements AfterViewInit, OnInit {
     this.service.postTask(this.task).subscribe((res) => {
       console.log(res);
       this.fillTalbeByUserTasks();
-      // this.timers.push({
-      //   timerValue: Number(res[i].duration),
-      //   timerSubscription: new Subscription(),
-      //   isTimerRunning: false,
-      // });
-
-      console.log('timerrrrr', this.timers);
       form.reset();
     });
   }
@@ -102,7 +95,7 @@ export class TaskComponent implements AfterViewInit, OnInit {
             timerSubscription: new Subscription(),
             isTimerRunning: false,
           });
-          // console.log('timers', this.timers);
+          console.log('timers', this.timers);
         }
       }
       this.dataSource.data = this.ELEMENT_DATA;
@@ -124,7 +117,7 @@ export class TaskComponent implements AfterViewInit, OnInit {
   }
 
   updateDurationByRecord(name: any, duration: any, id: any) {
-    this.task.taskName = name.taskName;
+    this.task.taskName = name;
     this.task.duration = duration;
     this.task.taskId = id;
     this.service.logedUserId.subscribe((res) => {
@@ -138,17 +131,29 @@ export class TaskComponent implements AfterViewInit, OnInit {
   }
 
   updateDuration(event: any, name: any, id: any) {
-    this.task.duration = event.innerText;
-    this.task.taskName = name;
-    this.task.taskId = id;
-    this.service.logedUserId.subscribe((res) => {
-      this.task.userId = res!;
-    });
+    const timeParts = event.innerText.split(':');
 
-    console.log('task', this.task);
-    this.service.updateTask(id, this.task).subscribe(() => {
-      this.fillTalbeByUserTasks();
-    });
+    if (timeParts.length !== 3) {
+      throw new Error('Invalid time format. Expected hh:mm:ss');
+    } else {
+      const hours = parseInt(timeParts[0], 10);
+      const minutes = parseInt(timeParts[1], 10);
+      const seconds = parseInt(timeParts[2], 10);
+
+      const toSeconds = hours * 3600 + minutes * 60 + seconds;
+
+      this.task.duration = toSeconds.toString();
+      this.task.taskName = name;
+      this.task.taskId = id;
+      this.service.logedUserId.subscribe((res) => {
+        this.task.userId = res!;
+      });
+
+      console.log('task', this.task);
+      this.service.updateTask(id, this.task).subscribe(() => {
+        this.fillTalbeByUserTasks();
+      });
+    }
   }
 
   announceSortChange(sortState: Sort) {
@@ -167,7 +172,7 @@ export class TaskComponent implements AfterViewInit, OnInit {
 
   toggleTimer(index: number, name: any, id: any) {
     if (this.timers[index].isTimerRunning) {
-      // Stop the timer
+      // Stop the timer when its running
       this.timers[index].timerSubscription.unsubscribe();
 
       this.updateDurationByRecord(
@@ -176,7 +181,7 @@ export class TaskComponent implements AfterViewInit, OnInit {
         id
       );
     } else {
-      // Start the timer
+      // Start the timer when timer is'nt running
       this.timers[index].timerSubscription = interval(1000).subscribe(() => {
         this.timers[index].timerValue++;
         this.ELEMENT_DATA[index].duration =

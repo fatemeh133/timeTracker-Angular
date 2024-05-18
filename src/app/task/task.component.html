@@ -55,7 +55,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>ضبط</th>
         <td mat-cell *matCellDef="let element; let i = index">
           <div
-            (click)="toggleTimer(i, element, element.taskId)"
+            (click)="toggleTimer(i, element.taskName, element.taskId)"
             class="cursorPointer"
           >
             @if (timers[i].isTimerRunning) {<img
@@ -75,16 +75,12 @@
       <!-- duration Column -->
       <ng-container matColumnDef="duration">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>طول انجام</th>
-        <td
-          mat-cell
-          *matCellDef="let element; let i = index"
-          contenteditable="true"
-          (blur)="
-            updateDuration($event.srcElement, element.taskName, element.taskId)
-          "
-        >
+        <td mat-cell *matCellDef="let element; let i = index" contenteditable="true"
+        (blur)="
+          updateDuration($event.srcElement, element.taskName, element.taskId)
+        ">
           <!-- <div>{{ timers[i].timerValue }} ثانیه</div> -->
-          {{ element.duration }}
+          {{ element.duration | duration }}
         </td>
       </ng-container>
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { codeMeliValidator } from '../../validator/CodeMeli.validator';
 import { ConnectionService } from '../../services/connection.service';
-import { User } from '../../services/user';
+import { User } from '../../models/user';
 import moment from 'jalali-moment';
 
 @Component({

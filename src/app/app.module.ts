@@ -23,6 +23,7 @@ import {
 
 import { HttpClientModule } from '@angular/common/http';
 import { ConnectionService } from './services/connection.service';
+import { DurationPipe } from './pipe/duration.pipe';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ConnectionService } from './services/connection.service';
     HeaderComponent,
     TaskComponent,
     HomeComponent,
+    DurationPipe,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from './user';
+import { User } from '../models/user';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Task } from './task';
+import { Task } from '../models/task';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class ConnectionService {
     number | null
   >(null);
 
-  constructor(private http: HttpClient,private router:Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getUser() {
     return this.http.get<User[]>(this.userUrl);
@@ -44,9 +44,7 @@ export class ConnectionService {
     if (localStorage.getItem('authchange')) {
       this.authchange.next(true);
 
-      this.logedUserId.next(
-        Number(localStorage.getItem('logedUserId'))
-      );
+      this.logedUserId.next(Number(localStorage.getItem('logedUserId')));
       this.router.navigate(['/task']);
     } else {
       this.authchange.next(false);

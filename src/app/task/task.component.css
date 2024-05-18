@@ -11,3 +11,9 @@ td {
 .cursorPointer {
   cursor: pointer;
 }
+secton {
+  overflow-x: auto;
+}
+::ng-deep .mat-elevation-z8 {
+  overflow-x: auto;
+}
