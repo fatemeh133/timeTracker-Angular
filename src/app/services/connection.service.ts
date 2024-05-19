@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Task } from '../models/task';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -16,27 +17,87 @@ export class ConnectionService {
   logedUserId: BehaviorSubject<number | null> = new BehaviorSubject<
     number | null
   >(null);
+  Tasks = new Subject<Task[]>();
+  users = new Subject<User[]>();
+  taskPosted = new EventEmitter<void>();
+  taskDeleted = new EventEmitter<void>();
+  taskUpdated = new EventEmitter<void>();
+  userPost = new EventEmitter<void>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private _snackBar: MatSnackBar
+  ) {}
 
   getUser() {
-    return this.http.get<User[]>(this.userUrl);
+    return this.http.get<User[]>(this.userUrl).subscribe({
+      next: (res) => {
+        this.users.next(res);
+      },
+      error: (err: any) => {
+        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+      },
+    });
   }
+
   postUser(user: User) {
-    return this.http.post<User>(this.userUrl, user);
+    return this.http.post<User>(this.userUrl, user).subscribe({
+      next: () => {
+        this.openSnackBar('کاربر ثبت نام شد،لطفا وارد شوید', 'بستن');
+        this.userPost.emit();
+      },
+      error: (err: any) => {
+        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+      },
+    });
   }
 
   getTask() {
-    return this.http.get<Task[]>(this.taskUrl);
+    return this.http.get<Task[]>(this.taskUrl).subscribe({
+      next: (res) => {
+        this.Tasks.next(res);
+      },
+      error: (err: any) => {
+        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+      },
+    });
   }
+
   postTask(task: Task) {
-    return this.http.post<Task[]>(this.taskUrl, task);
+    return this.http.post<Task[]>(this.taskUrl, task).subscribe({
+      next: () => {
+        this.openSnackBar('با موفقیت ثبت شد', 'بستن');
+        this.taskPosted.emit();
+      },
+      error: (err: any) => {
+        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+      },
+    });
   }
+
   deleteTask(id: number) {
-    return this.http.delete<number>(this.taskUrl + '/' + id);
+    return this.http.delete<number>(this.taskUrl + '/' + id).subscribe({
+      next: () => {
+        this.openSnackBar('با موفقیت حذف شد', 'بستن');
+        this.taskDeleted.emit();
+      },
+      error: (err: any) => {
+        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+      },
+    });
   }
+
   updateTask(id: number, task: Task) {
-    return this.http.put<Task>(this.taskUrl + '/' + id, task);
+    return this.http.put<Task>(this.taskUrl + '/' + id, task).subscribe({
+      next: () => {
+        this.openSnackBar('با موفقیت به روزرسانی شد', 'بستن');
+        this.taskUpdated.emit();
+      },
+      error: (err: any) => {
+        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+      },
+    });
   }
 
   getFromStorage() {
@@ -49,5 +110,9 @@ export class ConnectionService {
     } else {
       this.authchange.next(false);
     }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }

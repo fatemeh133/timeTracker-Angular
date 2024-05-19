@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  output,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -52,15 +58,15 @@ export class TaskComponent implements AfterViewInit, OnInit {
       this.task.userId = logedUserId!;
     });
 
-    this.service.postTask(this.task).subscribe((res) => {
-      console.log(res);
+    this.service.postTask(this.task);
+    this.service.taskPosted.subscribe(() => {
       this.fillTalbeByUserTasks();
       form.reset();
     });
   }
   onDelete(id: number) {
-    this.service.deleteTask(id).subscribe((res) => {
-      console.log(res);
+    this.service.deleteTask(id);
+    this.service.taskDeleted.subscribe((res) => {
       this.fillTalbeByUserTasks();
     });
   }
@@ -77,7 +83,8 @@ export class TaskComponent implements AfterViewInit, OnInit {
   }
 
   fillTalbeByUserTasks() {
-    this.service.getTask().subscribe((res) => {
+    this.service.getTask();
+    this.service.Tasks.subscribe((res) => {
       this.ELEMENT_DATA = [];
       this.timers = [];
       for (let i = 0; i < res.length; i++) {
@@ -110,10 +117,7 @@ export class TaskComponent implements AfterViewInit, OnInit {
       this.task.userId = res!;
     });
 
-    console.log('task', this.task);
-    this.service.updateTask(id, this.task).subscribe(() => {
-      this.fillTalbeByUserTasks();
-    });
+    this.updateTask(id, this.task);
   }
 
   updateDurationByRecord(name: any, duration: any, id: any) {
@@ -124,13 +128,10 @@ export class TaskComponent implements AfterViewInit, OnInit {
       this.task.userId = res!;
     });
 
-    console.log('task', this.task);
-    this.service.updateTask(id, this.task).subscribe(() => {
-      this.fillTalbeByUserTasks();
-    });
+    this.updateTask(id, this.task);
   }
 
-  updateDuration(event: any, name: any, id: any) {
+  updateDuration(event: any, name: string, id: number) {
     const timeParts = event.innerText.split(':');
 
     if (timeParts.length !== 3) {
@@ -149,13 +150,16 @@ export class TaskComponent implements AfterViewInit, OnInit {
         this.task.userId = res!;
       });
 
-      console.log('task', this.task);
-      this.service.updateTask(id, this.task).subscribe(() => {
-        this.fillTalbeByUserTasks();
-      });
+      this.updateTask(id, this.task);
     }
   }
 
+  updateTask(id: number, task: Task) {
+    this.service.updateTask(id, task);
+    this.service.taskUpdated.subscribe(() => {
+      this.fillTalbeByUserTasks();
+    });
+  }
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);

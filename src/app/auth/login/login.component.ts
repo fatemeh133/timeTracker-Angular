@@ -30,37 +30,36 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    this.userService.getUser().subscribe({
-      next: (res) => {
-        for (var i = 0; i < res.length; i++) {
-          if (
-            res[i].userName === form.controls['name'].value &&
-            res[i].password === form.controls['password'].value
-          ) {
-            this.isLogged = true;
-            this.id = res[i].userId!;
-          }
-          console.log(this.isLogged);
+    this.userService.getUser();
+    this.userService.users.subscribe((res) => {
+      for (var i = 0; i < res.length; i++) {
+        if (
+          res[i].userName === form.controls['name'].value &&
+          res[i].password === form.controls['password'].value
+        ) {
+          this.isLogged = true;
+          this.id = res[i].userId!;
         }
+        console.log(this.isLogged);
+      }
 
-        this.userService.logedUserId.next(this.id);
-        this.userService.authchange.next(this.isLogged);
-        //save being loged in in storage
-        localStorage.setItem('logedUserId', this.id.toString());
-        localStorage.setItem('authchange', this.isLogged.toString());
-      },
-      complete: () => {
-        if (this.isLogged == true) {
-          this.router.navigate(['/task']);
-        } else {
-          alert('کاربری بااین مشخصات وجود ندارد');
-        }
-      },
+      this.userService.logedUserId.next(this.id);
+      this.userService.authchange.next(this.isLogged);
+      //save being loged in in storage
+      localStorage.setItem('logedUserId', this.id.toString());
+      localStorage.setItem('authchange', this.isLogged.toString());
+
+      if (this.isLogged == true) {
+        this.router.navigate(['/task']);
+      } else {
+        alert('کاربری بااین مشخصات وجود ندارد');
+      }
     });
   }
 
   getUsersUserNamesAndPasswords() {
-    this.userService.getUser().subscribe((res) => {
+    this.userService.getUser();
+    this.userService.users.subscribe((res) => {
       console.log('get res oninit', res);
 
       for (var i = 0; i < res.length; i++) {
