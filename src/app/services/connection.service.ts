@@ -5,6 +5,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { Task } from '../models/task';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from '../snackbar/snackbar.component';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class ConnectionService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private _snackBar: MatSnackBar
+    private snackBar: MatSnackBar
   ) {}
 
   getUser() {
@@ -36,7 +37,7 @@ export class ConnectionService {
         this.users.next(res);
       },
       error: (err: any) => {
-        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+        this.openSnackBar(err.message, 'بستن', 'error');
       },
     });
   }
@@ -44,11 +45,11 @@ export class ConnectionService {
   postUser(user: User) {
     return this.http.post<User>(this.userUrl, user).subscribe({
       next: () => {
-        this.openSnackBar('کاربر ثبت نام شد،لطفا وارد شوید', 'بستن');
+        this.openSnackBar('کاربر ثبت نام شد،لطفا وارد شوید', 'بستن', 'success');
         this.userPost.emit();
       },
       error: (err: any) => {
-        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+        this.openSnackBar(err.message, 'بستن', 'error');
       },
     });
   }
@@ -59,7 +60,7 @@ export class ConnectionService {
         this.Tasks.next(res);
       },
       error: (err: any) => {
-        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+        this.openSnackBar(err.message, 'بستن', 'error');
       },
     });
   }
@@ -67,11 +68,11 @@ export class ConnectionService {
   postTask(task: Task) {
     return this.http.post<Task[]>(this.taskUrl, task).subscribe({
       next: () => {
-        this.openSnackBar('با موفقیت ثبت شد', 'بستن');
+        this.openSnackBar('با موفقیت ثبت شد', 'بستن', 'success');
         this.taskPosted.emit();
       },
       error: (err: any) => {
-        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+        this.openSnackBar(err.message, 'بستن', 'error');
       },
     });
   }
@@ -79,11 +80,11 @@ export class ConnectionService {
   deleteTask(id: number) {
     return this.http.delete<number>(this.taskUrl + '/' + id).subscribe({
       next: () => {
-        this.openSnackBar('با موفقیت حذف شد', 'بستن');
+        this.openSnackBar('با موفقیت حذف شد', 'بستن', 'success');
         this.taskDeleted.emit();
       },
       error: (err: any) => {
-        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+        this.openSnackBar(err.message, 'بستن', 'error');
       },
     });
   }
@@ -91,11 +92,11 @@ export class ConnectionService {
   updateTask(id: number, task: Task) {
     return this.http.put<Task>(this.taskUrl + '/' + id, task).subscribe({
       next: () => {
-        this.openSnackBar('با موفقیت به روزرسانی شد', 'بستن');
+        this.openSnackBar('با موفقیت به روزرسانی شد', 'بستن', 'success');
         this.taskUpdated.emit();
       },
       error: (err: any) => {
-        this.openSnackBar(err.message + '  :خطا  ', 'بستن');
+        this.openSnackBar(err.message, 'بستن', 'error');
       },
     });
   }
@@ -112,7 +113,15 @@ export class ConnectionService {
     }
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action);
+  openSnackBar(
+    message: string,
+    action: string,
+    type: 'success' | 'error' | 'info' = 'info'
+  ) {
+    this.snackBar.openFromComponent(SnackbarComponent, {
+      data: { message, action, type },
+      duration: 6000,
+      panelClass: ['custom-snack-bar-container'],
+    });
   }
 }

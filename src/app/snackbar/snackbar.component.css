@@ -1,0 +1,30 @@
+::ng-deep .mat-mdc-snack-bar-label {
+  padding: 0;
+}
+::ng-deep .mdc-snackbar__surface {
+  padding: 0;
+}
+::ng-deep .custom-snack-bar .mdc-button__label {
+  color: white;
+}
+.custom-snack-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: 4px;
+  color: white;
+  direction: rtl;
+}
+
+.success {
+  background-color: #0f9960;
+}
+
+.error {
+  background-color: #d13913;
+}
+
+.info {
+  background-color: #0077bb;
+}

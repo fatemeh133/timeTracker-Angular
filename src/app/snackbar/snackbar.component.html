@@ -1,0 +1,4 @@
+<div [ngClass]="data.type" class="custom-snack-bar">
+  <span>{{ data.message }}</span>
+  <button *ngIf="data.action" mat-button (click)="onAction()">{{ data.action }}</button>
+</div>
