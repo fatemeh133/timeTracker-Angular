@@ -13,6 +13,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -30,6 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSortModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatTooltipModule,
   ],
   exports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSortModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatTooltipModule,
   ],
   providers: [provideNativeDateAdapter()],
 })
