@@ -24,6 +24,7 @@ import {
 import { HttpClientModule } from '@angular/common/http';
 import { ConnectionService } from './services/connection.service';
 import { DurationPipe } from './pipe/duration.pipe';
+import { CencelDialogComponent } from './cencel-dialog/cencel-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { DurationPipe } from './pipe/duration.pipe';
     TaskComponent,
     HomeComponent,
     DurationPipe,
+    CencelDialogComponent,
   ],
   imports: [
     BrowserModule,

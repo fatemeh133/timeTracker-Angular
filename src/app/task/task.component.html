@@ -92,11 +92,12 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>حذف</th>
         <td mat-cell *matCellDef="let element">
-          <span (click)="onDelete(element.taskId)" class="cursorPointer"
+          <span (click)="openDialog(element.taskId)" class="cursorPointer"
             ><img
               src="https://cdn-icons-png.flaticon.com/512/4476/4476210.png"
               alt="close"
               style="width: 30px"
+
           /></span>
         </td>
       </ng-container>

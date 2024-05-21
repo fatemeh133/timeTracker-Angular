@@ -10,9 +10,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ConnectionService } from '../services/connection.service';
-import { interval, Subject, Subscription } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Task } from '../models/task';
+import { PeriodicElement } from '../models/table-content';
+import { MatDialog } from '@angular/material/dialog';
+import { CencelDialogComponent } from '../cencel-dialog/cencel-dialog.component';
 
 @Component({
   selector: 'app-task',
@@ -22,7 +25,8 @@ import { Task } from '../models/task';
 export class TaskComponent implements AfterViewInit, OnInit {
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
-    private service: ConnectionService
+    private service: ConnectionService,
+    public dialog: MatDialog
   ) {}
   userIdRecived!: number | null;
   displayedColumns: string[] = [
@@ -35,6 +39,7 @@ export class TaskComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource<PeriodicElement>();
   reactiveForm!: FormGroup;
   ELEMENT_DATA: PeriodicElement[] = [];
+
   task: Task = {
     taskId: 0,
     userId: 0,
@@ -42,8 +47,15 @@ export class TaskComponent implements AfterViewInit, OnInit {
     duration: '0',
   };
 
+  timers: {
+    timerValue: number;
+    timerSubscription: Subscription;
+    isTimerRunning: boolean;
+  }[] = [];
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
   ngOnInit() {
     this.reactiveForm = new FormGroup({
       taskName: new FormControl('', Validators.required),
@@ -62,12 +74,6 @@ export class TaskComponent implements AfterViewInit, OnInit {
     this.service.taskPosted.subscribe(() => {
       this.fillTalbeByUserTasks();
       form.reset();
-    });
-  }
-  onDelete(id: number) {
-    this.service.deleteTask(id);
-    this.service.taskDeleted.subscribe((res) => {
-      this.fillTalbeByUserTasks();
     });
   }
 
@@ -168,12 +174,6 @@ export class TaskComponent implements AfterViewInit, OnInit {
     }
   }
 
-  timers: {
-    timerValue: number;
-    timerSubscription: Subscription;
-    isTimerRunning: boolean;
-  }[] = [];
-
   toggleTimer(index: number, name: any, id: any) {
     if (this.timers[index].isTimerRunning) {
       // Stop the timer when its running
@@ -204,11 +204,17 @@ export class TaskComponent implements AfterViewInit, OnInit {
       }
     });
   }
-}
 
-export interface PeriodicElement {
-  duration: string;
-  taskName: string;
-  delete: string;
-  taskId: number;
+  openDialog(id: number) {
+    const dialogRef = this.dialog.open(CencelDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.service.deleteTask(id);
+        this.service.taskDeleted.subscribe(() => {
+          this.fillTalbeByUserTasks();
+        });
+      }
+    });
+  }
 }

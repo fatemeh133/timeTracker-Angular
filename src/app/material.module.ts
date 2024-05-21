@@ -12,6 +12,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [],
@@ -28,6 +29,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatTableModule,
     MatSortModule,
     MatSnackBarModule,
+    MatDialogModule,
   ],
   exports: [
     CommonModule,
@@ -42,6 +44,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatTableModule,
     MatSortModule,
     MatSnackBarModule,
+    MatDialogModule,
   ],
   providers: [provideNativeDateAdapter()],
 })
