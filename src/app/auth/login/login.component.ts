@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ConnectionService } from '../../services/connection.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,29 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   reactiveForm!: FormGroup;
-  usernames: string[] = [];
-  Passwords: string[] = [];
-  isLogged = false;
-  id!: number;
+  users: { username: string; passwords: string; id: any }[] = [];
 
   constructor(private userService: ConnectionService, private router: Router) {}
+
+  getUsersUserNamesAndPasswords() {
+    this.users = [];
+    this.userService.getUser();
+    this.userService.users.subscribe((res) => {
+      console.log('res', res);
+
+      for (var i = 0; i < res.length; i++) {
+        if (res[i] && res[i].userName && res[i].password) {
+          const newUser = {
+            username: res[i].userName,
+            passwords: res[i].password,
+            id: res[i].userId,
+          };
+          this.users.push(newUser);
+        }
+      }
+      console.log('users', this.users);
+    });
+  }
 
   ngOnInit() {
     this.getUsersUserNamesAndPasswords();
@@ -25,55 +43,38 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', Validators.required),
     });
   }
+
   ngDoCheck() {
     this.userService.getFromStorage();
   }
 
   onSubmit(form: FormGroup) {
-    this.userService.getUser();
-    this.userService.users.subscribe((res) => {
-      for (var i = 0; i < res.length; i++) {
-        if (
-          res[i].userName === form.controls['name'].value &&
-          res[i].password === form.controls['password'].value
-        ) {
-          this.isLogged = true;
-          this.id = res[i].userId!;
-        }
-        console.log(this.isLogged);
-      }
+    for (var i = 0; i < this.users.length; i++) {
+      if (
+        this.users[i].username === form.controls['name'].value &&
+        this.users[i].passwords === form.controls['password'].value
+      ) {
+        //save user
+        this.userService.logedUserId.next(this.users[i].id);
+        this.userService.authchange.next(true);
 
-      this.userService.logedUserId.next(this.id);
-      this.userService.authchange.next(this.isLogged);
-      //save being loged in in storage
-      localStorage.setItem('logedUserId', this.id.toString());
-      localStorage.setItem('authchange', this.isLogged.toString());
+        //save being loged in in storage
+        localStorage.setItem('logedUserId', this.users[i].id.toString());
+        localStorage.setItem('authchange', 'true');
 
-      if (this.isLogged == true) {
+        this.userService.openSnackBar('خوش آمدید', 'بستن', 'success');
         this.router.navigate(['/task']);
-      } else {
-        alert('کاربری بااین مشخصات وجود ندارد');
+      } else if (
+        this.users[i].username !== form.controls['name'].value &&
+        this.users[i].passwords !== form.controls['password'].value
+      ) {
+        console.log(false);
+        this.userService.openSnackBar(
+          'کاربری بااین مشخصات وجود ندارد',
+          'بستن',
+          'error'
+        );
       }
-    });
-  }
-
-  getUsersUserNamesAndPasswords() {
-    this.userService.getUser();
-    this.userService.users.subscribe((res) => {
-      console.log('get res oninit', res);
-
-      for (var i = 0; i < res.length; i++) {
-        if (res[i] && res[i].userName) {
-          this.usernames.push(res[i].userName);
-        }
-      }
-      for (var i = 0; i < res.length; i++) {
-        if (res[i] && res[i].password) {
-          this.Passwords.push(res[i].password);
-        }
-      }
-      console.log(this.usernames);
-      console.log(this.Passwords);
-    });
+    }
   }
 }

@@ -51,9 +51,9 @@ export class RegisterComponent implements OnInit {
     console.log('user details sent to form', this.user);
 
     if (this.usernames.includes(this.user.userName)) {
-      this.userService.openSnackBar('نام کاربری تکراری', 'بستن');
+      this.userService.openSnackBar('نام کاربری تکراری', 'بستن','error');
     } else if (this.codemelies.includes(this.user.codeMeli)) {
-      this.userService.openSnackBar('کدملی تکراری', 'بستن');
+      this.userService.openSnackBar('کدملی تکراری', 'بستن','error');
     } else {
       this.userService.postUser(this.user);
       this.userService.userPost.subscribe(() => {
