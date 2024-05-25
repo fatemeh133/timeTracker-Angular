@@ -195,6 +195,7 @@ export class TaskComponent implements AfterViewInit, OnInit {
     // Toggle the timer state
     this.timers[index].isTimerRunning = !this.timers[index].isTimerRunning;
   }
+  
 
   ngOnDestroy() {
     // Unsubscribe from all timer subscriptions

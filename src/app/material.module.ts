@@ -14,6 +14,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [],
@@ -32,6 +34,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSnackBarModule,
     MatDialogModule,
     MatTooltipModule,
+    MatSidenavModule,
+    MatToolbarModule,
   ],
   exports: [
     CommonModule,
@@ -48,6 +52,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSnackBarModule,
     MatDialogModule,
     MatTooltipModule,
+    MatSidenavModule,
+    MatToolbarModule,
   ],
   providers: [provideNativeDateAdapter()],
 })

@@ -26,6 +26,7 @@ import { ConnectionService } from './services/connection.service';
 import { DurationPipe } from './pipe/duration.pipe';
 import { CencelDialogComponent } from './cencel-dialog/cencel-dialog.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { SnackbarComponent } from './snackbar/snackbar.component';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    FlexLayoutModule,
   ],
   providers: [
     {

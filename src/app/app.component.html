@@ -1,8 +1,59 @@
-<app-header></app-header>
-<div class="container">
-  @defer {
-  <router-outlet></router-outlet>
-  }@loading {
-  <p>Loading...</p>
-  }
-</div>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <div class="d-flex flex-column">
+      <button mat-button class="menu-btn" routerLink="/home">
+        خانه
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/25/25694.png"
+          alt="homeicon"
+          class="icon"
+        />
+      </button>
+
+      <button
+        mat-button
+        class="menu-btn"
+        routerLink="/login"
+        *ngIf="!isLogedin"
+      >
+        ورود
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/5509/5509636.png"
+          alt="homeicon"
+          class="icon"
+        /></button
+      ><button mat-button class="menu-btn" routerLink="/task" *ngIf="isLogedin">
+        وظایف
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/5391/5391628.png"
+          alt="homeicon"
+          class="icon"
+        />
+      </button>
+      <button
+        mat-button
+        class="menu-btn"
+        routerLink="/home"
+        *ngIf="isLogedin"
+        (click)="onExit()"
+      >
+        خروج
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/992/992680.png"
+          alt="homeicon"
+          class="icon"
+        />
+      </button></div
+  ></mat-sidenav>
+  <mat-sidenav-content
+    ><app-header></app-header>
+
+    <div class="container">
+      @defer {
+      <router-outlet></router-outlet>
+      }@loading {
+      <p>Loading...</p>
+      }
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

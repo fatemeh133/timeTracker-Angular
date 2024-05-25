@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConnectionService } from '../services/connection.service';
+import { Subject } from 'rxjs';
+import { SidenavServiceService } from '../services/sidenav-service.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +9,10 @@ import { ConnectionService } from '../services/connection.service';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
-  constructor(private service: ConnectionService) {}
+  constructor(
+    private service: ConnectionService,
+    private sidenavService: SidenavServiceService
+  ) {}
 
   isLogedin: boolean = false;
 
@@ -23,5 +28,9 @@ export class HeaderComponent implements OnInit {
 
     localStorage.removeItem('logedUserId');
     this.service.logedUserId.next(null);
+  }
+
+  toggleSidenav() {
+    this.sidenavService.toggle();
   }
 }
