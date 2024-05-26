@@ -36,6 +36,25 @@
       (matSortChange)="announceSortChange($event)"
       class="mat-elevation-z8"
     >
+      <!-- IsChecked Column -->
+      <ng-container matColumnDef="IsChecked">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>تکمیل</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox
+            class="example-margin"
+            [checked]="element.isChecked"
+            (click)="
+              updatechecked(
+                element.taskId,
+                element.taskName,
+                element.duration,
+                element.isChecked,
+                element.date
+              )
+            "
+          ></mat-checkbox>
+        </td>
+      </ng-container>
       <!-- taskName Column -->
       <ng-container matColumnDef="taskName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>نام وظیفه</th>
@@ -44,10 +63,23 @@
           *matCellDef="let element"
           contenteditable="true"
           (blur)="
-            updateTaskName($event.srcElement, element.duration, element.taskId)
+            updateTaskName(
+              $event.srcElement,
+              element.duration,
+              element.taskId,
+              element.isChecked,
+              element.date
+            )
           "
         >
           {{ element.taskName }}
+        </td>
+      </ng-container>
+      <!-- date Column -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>تاریخ ایجاد</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.date }}
         </td>
       </ng-container>
       <!-- time Column -->
@@ -82,7 +114,13 @@
           *matCellDef="let element; let i = index"
           contenteditable="true"
           (blur)="
-            updateDuration($event.srcElement, element.taskName, element.taskId)
+            updateDuration(
+              $event.srcElement,
+              element.taskName,
+              element.taskId,
+              element.isChecked,
+              element.date
+            )
           "
         >
           <!-- <div>{{ timers[i].timerValue }} ثانیه</div> -->

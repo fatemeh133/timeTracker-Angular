@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -35,7 +36,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatDialogModule,
     MatTooltipModule,
     MatSidenavModule,
-    MatToolbarModule,
+    MatToolbarModule,MatCheckboxModule
   ],
   exports: [
     CommonModule,
@@ -53,7 +54,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatDialogModule,
     MatTooltipModule,
     MatSidenavModule,
-    MatToolbarModule,
+    MatToolbarModule,MatCheckboxModule
   ],
   providers: [provideNativeDateAdapter()],
 })

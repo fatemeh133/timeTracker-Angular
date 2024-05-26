@@ -9,19 +9,19 @@ export class SidenavServiceService {
 
   constructor() {}
 
-  public setSidenav(sidenav: MatSidenav) {
+  setSidenav(sidenav: MatSidenav) {
     this.sidenav = sidenav;
   }
 
-  public open() {
+  open() {
     return this.sidenav.open();
   }
 
-  public close() {
+  close() {
     return this.sidenav.close();
   }
 
-  public toggle(): void {
+  toggle(): void {
     this.sidenav.toggle();
   }
 }
