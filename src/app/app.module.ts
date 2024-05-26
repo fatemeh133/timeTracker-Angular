@@ -27,6 +27,9 @@ import { DurationPipe } from './pipe/duration.pipe';
 import { CencelDialogComponent } from './cencel-dialog/cencel-dialog.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { PersianPaginatior } from './task/translate-Pagination';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FormsModule,
     HttpClientModule,
     FlexLayoutModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {
@@ -58,6 +62,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     { provide: MAT_DATE_FORMATS, useValue: PERSIAN_DATE_FORMATS },
     provideAnimationsAsync(),
     ConnectionService,
+    { provide: MatPaginatorIntl, useClass: PersianPaginatior },
   ],
   bootstrap: [AppComponent],
 })

@@ -17,3 +17,15 @@ secton {
 ::ng-deep .mat-elevation-z8 {
   overflow-x: auto;
 }
+/* app.component.css */
+.fade-in-box {
+  width: 200px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  text-align: center;
+  box-shadow: 5px 5px 5px rrgb(88, 88, 88)
+}
+.fade-in-box:hover {
+  transform: scale(1.1);
+}

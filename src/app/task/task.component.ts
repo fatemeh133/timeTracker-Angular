@@ -16,11 +16,53 @@ import { Task } from '../models/task';
 import { PeriodicElement } from '../models/table-content';
 import { MatDialog } from '@angular/material/dialog';
 import { CencelDialogComponent } from '../cencel-dialog/cencel-dialog.component';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
+  animations: [
+    trigger('fadeIn', [
+      state(
+        'void',
+        style({
+          opacity: 0,
+        })
+      ),
+      state(
+        '*',
+        style({
+          opacity: 1,
+        })
+      ),
+      transition(':enter', [animate('1s')]),
+    ]),
+    trigger('appear', [
+      state(
+        'void',
+        style({
+          opacity: 0,
+          transform: 'translateY(20px)',
+          margin: '10px',
+        })
+      ),
+      state(
+        '*',
+        style({
+          opacity: 1,
+          transform: 'translateY(0)',
+        })
+      ),
+      transition(':enter', [animate('1s ease-in-out')]),
+    ]),
+  ],
 })
 export class TaskComponent implements AfterViewInit, OnInit {
   constructor(
@@ -59,11 +101,14 @@ export class TaskComponent implements AfterViewInit, OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  fadeInState!: string;
 
   ngOnInit() {
     this.reactiveForm = new FormGroup({
       taskName: new FormControl('', Validators.required),
     });
+
+    this.fadeInState = 'in';
   }
   onsubmit(form: FormGroup) {
     // console.log('task', this.task);
