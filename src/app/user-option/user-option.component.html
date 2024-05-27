@@ -1,0 +1,140 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div>
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQnO7QLbgqxCIswhJPOO0750lzSDeSD4k5L_2ahBU9ew&s"
+          alt="user"
+          class="user-icon me-3"
+        />
+        <img
+          src="https://cdn-icons-png.freepik.com/512/9071/9071629.png"
+          alt="camera"
+          class="camera-icon"
+          matTooltip="تغیر عکس کاربر"
+        />
+      </div>
+
+      <input
+        type="file"
+        id="profilePicture"
+        (change)="onFileSelected($event)"
+      />
+      <button mat-flat-button color="primary" class="ms-2">آپلود عکس</button>
+      <button mat-stroked-button>حذف عکس</button>
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+</div>
+
+<form
+  class="d-flex flex-column register-form mt-4"
+  [formGroup]="reactiveForm"
+  (submit)="onSubmit(reactiveForm)"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-label>نام </mat-label>
+          <input
+            matInput
+            minlength="3"
+            maxlength="100"
+            formControlName="name"
+          />
+
+          @if (reactiveForm.get('name')?.hasError('required')) {
+          <mat-error>نام نمی تواند خالی باشد</mat-error>
+          } @if (reactiveForm.get('name')?.hasError('minlength')) {
+          <mat-error>نام نمی تواند کمتر از ۳ حرف باشد</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <mat-label>کدملی </mat-label>
+          <input
+            matInput
+            minlength="10"
+            maxlength="10"
+            formControlName="codeMeli"
+          />
+
+          @if (reactiveForm.get('codeMeli')?.hasError('required')) {
+          <mat-error>کدملی نمی تواند خالی باشد</mat-error>
+          }@if(reactiveForm.get('codeMeli')?.hasError('codeMeliValidator')){<mat-error
+            >کدملی نامعتبر </mat-error
+          >}
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-label>نام کاربری</mat-label>
+          <input
+            matInput
+            minlength="3"
+            maxlength="100"
+            formControlName="userName"
+          />
+
+          @if (reactiveForm.get('userName')?.hasError('required')) {
+          <mat-error>نام کاربری نمی تواند خالی باشد</mat-error>
+          }@if (reactiveForm.get('userName')?.hasError('minlength')) {
+          <mat-error>نام کاربری نمی تواند کمتر از ۳ حرف باشد</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <mat-label class="padding-input-rtl">تاریخ تولد</mat-label>
+          <input
+            class="padding-input-rtl"
+            matInput
+            minlength="2"
+            maxlength="10"
+            [matDatepicker]="picker"
+            name="birthday"
+            formControlName="birthDate"
+          />
+
+          @if (reactiveForm.get('birthDate')?.hasError('required')) {
+          <mat-error>تاریخ تولد نمی تواند خالی باشد</mat-error>
+          }
+          <mat-hint>روز/ماه/سال</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-form-field>
+      <mat-label>رمز عبور</mat-label>
+      <input matInput minlength="6" formControlName="password" />
+
+      @if (reactiveForm.get('password')?.hasError('required')) {
+      <mat-error>رمز عبور نمی تواند خالی باشد</mat-error>
+      }@if (reactiveForm.get('password')?.hasError('minlength')) {
+      <mat-error>رمز عبور نمیتواند کمتر از ۶ حرف باشد </mat-error>
+      }
+    </mat-form-field>
+
+    <section>
+      <button
+        mat-flat-button
+        color="primary"
+        class="mx-auto"
+        [disabled]="reactiveForm.invalid"
+      >
+        ثبت تغیرات
+      </button>
+    </section>
+  </div>
+</form>

@@ -30,6 +30,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PersianPaginatior } from './task/translate-Pagination';
+import { UserOptionComponent } from './user-option/user-option.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { PersianPaginatior } from './task/translate-Pagination';
     DurationPipe,
     CencelDialogComponent,
     SnackbarComponent,
+    UserOptionComponent,
   ],
   imports: [
     BrowserModule,

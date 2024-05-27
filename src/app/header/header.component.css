@@ -16,5 +16,11 @@ header {
   cursor: pointer;
 }
 
-@media screen {
+.user-icon {
+  border-radius: 50%;
+  width: 40px;
+  opacity: 0.8;
+}
+.user-icon:hover {
+  cursor: pointer;
 }
