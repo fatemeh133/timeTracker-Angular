@@ -68,6 +68,13 @@
     }
   </mat-form-field>
 
+  <input
+    type="file"
+    formControlName="profilePicture"
+    (change)="onFileChange($event)"
+    style="display: none"
+  />
+
   <section>
     <button
       mat-flat-button

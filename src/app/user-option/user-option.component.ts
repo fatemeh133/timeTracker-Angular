@@ -11,7 +11,7 @@ import { codeMeliValidator } from '../validator/CodeMeli.validator';
 export class UserOptionComponent {
   reactiveForm!: FormGroup;
   user: User = {
-    nameofuser: '',
+    nameOfUser: '',
     codeMeli: '',
     userName: '',
     birthDate: '',

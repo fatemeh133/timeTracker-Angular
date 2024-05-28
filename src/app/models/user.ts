@@ -1,9 +1,10 @@
 export interface User {
   userId?: number;
-  nameofuser: string;
+  nameOfUser: string;
   codeMeli: string;
   userName: string;
   birthDate: string;
   password: string;
-  profilePicture?: File;
+  profilePicture?: File|null;
+  profilePicturePath?: string;
 }

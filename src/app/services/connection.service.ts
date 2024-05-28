@@ -1,7 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { User } from '../models/user';
-import { BehaviorSubject, Subject } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  Observable,
+  Subject,
+  tap,
+  throwError,
+} from 'rxjs';
 import { Task } from '../models/task';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -25,7 +32,6 @@ export class ConnectionService {
   taskUpdated = new EventEmitter<void>();
   userPost = new EventEmitter<void>();
 
-
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -43,16 +49,17 @@ export class ConnectionService {
     });
   }
 
-  postUser(user: User) {
-    return this.http.post<User>(this.userUrl, user).subscribe({
-      next: () => {
+  postUser(formData: FormData): Observable<User> {
+    return this.http.post<User>(this.userUrl, formData).pipe(
+      tap(() => {
         this.openSnackBar('کاربر ثبت نام شد،لطفا وارد شوید', 'بستن', 'success');
-        this.userPost.emit();
-      },
-      error: (err: any) => {
+        // this.userPost.emit();
+      }),
+      catchError((err) => {
         this.openSnackBar(err.message, 'بستن', 'error');
-      },
-    });
+        return throwError(err);
+      })
+    );
   }
 
   getTask() {
@@ -125,6 +132,4 @@ export class ConnectionService {
       panelClass: ['custom-snack-bar-container'],
     });
   }
-
-
 }

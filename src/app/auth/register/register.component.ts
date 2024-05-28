@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { codeMeliValidator } from '../../validator/CodeMeli.validator';
 import { ConnectionService } from '../../services/connection.service';
-import { User } from '../../models/user';
 import moment from 'jalali-moment';
 
 @Component({
@@ -14,13 +13,15 @@ export class RegisterComponent implements OnInit {
   constructor(private userService: ConnectionService) {}
 
   reactiveForm!: FormGroup;
-  user: User = {
-    nameofuser: '',
-    codeMeli: '',
-    userName: '',
-    birthDate: '',
-    password: '',
-  };
+  // user: User = {
+  //   nameOfUser: '',
+  //   codeMeli: '',
+  //   userName: '',
+  //   birthDate: '',
+  //   password: '',
+  //   profilePicture: null,
+  //   profilePicturePath: '',
+  // };
 
   usernames: string[] = [];
   codemelies: string[] = [];
@@ -32,31 +33,48 @@ export class RegisterComponent implements OnInit {
       userName: new FormControl('', Validators.required),
       birthDate: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
+      profilePicture: new FormControl(''),
     });
 
     this.getUsersUserNamesAndCodeMelies();
   }
 
-  onSubmit(form: FormGroup) {
-    this.user.nameofuser = form.controls['name'].value;
-    this.user.codeMeli = form.controls['codeMeli'].value.toString();
-    this.user.password = form.controls['password'].value;
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.reactiveForm.patchValue({
+        profilePicture: file,
+      });
+    }
+  }
 
+  onSubmit(form: FormGroup) {
+    const formData = new FormData();
+
+    const nameOfUser = form.controls['name'].value;
+    const codeMeli = form.controls['codeMeli'].value.toString();
+    const password = form.controls['password'].value;
     const jsDate = form.controls['birthDate'].value['_d'].toString();
     const persianDate = moment(jsDate).format('jYYYY/jMM/jDD');
+    const birthDate = persianDate;
+    const userName = form.controls['userName'].value;
 
-    this.user.birthDate = persianDate;
-    this.user.userName = form.controls['userName'].value;
+    if (form.controls['profilePicture'].value) {
+      formData.append('profilePicture', form.controls['profilePicture'].value);
+    }
 
-    console.log('user details sent to form', this.user);
+    formData.append('nameOfUser', nameOfUser);
+    formData.append('codeMeli', codeMeli);
+    formData.append('password', password);
+    formData.append('birthDate', birthDate);
+    formData.append('userName', userName);
 
-    if (this.usernames.includes(this.user.userName)) {
-      this.userService.openSnackBar('نام کاربری تکراری', 'بستن','error');
-    } else if (this.codemelies.includes(this.user.codeMeli)) {
-      this.userService.openSnackBar('کدملی تکراری', 'بستن','error');
+    if (this.usernames.includes(userName)) {
+      this.userService.openSnackBar('نام کاربری تکراری', 'بستن', 'error');
+    } else if (this.codemelies.includes(codeMeli)) {
+      this.userService.openSnackBar('کدملی تکراری', 'بستن', 'error');
     } else {
-      this.userService.postUser(this.user);
-      this.userService.userPost.subscribe(() => {
+      this.userService.postUser(formData).subscribe(() => {
         form.reset();
       });
     }
