@@ -27,7 +27,7 @@
       >
         آپلود عکس
       </button>
-      <button mat-stroked-button>حذف عکس</button>
+      <button mat-stroked-button (click)="deletepic()">حذف عکس</button>
     </div>
     <span *ngIf="selectedFileName" class="file-name"
       >نام فایل: {{ selectedFileName }}</span

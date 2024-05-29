@@ -69,6 +69,11 @@ export class UserOptionComponent {
       });
     }
   }
+  deletepic() {
+    this.reactiveForm.patchValue({
+      profilePicture: null,
+    });
+  }
 
   onSubmit(form: FormGroup) {
     const formData = new FormData();

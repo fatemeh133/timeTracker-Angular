@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
         this.users[i].username !== form.controls['name'].value &&
         this.users[i].passwords !== form.controls['password'].value
       ) {
-        console.log(false);
+
         this.userService.openSnackBar(
           'کاربری بااین مشخصات وجود ندارد',
           'بستن',
