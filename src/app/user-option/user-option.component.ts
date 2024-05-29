@@ -35,7 +35,9 @@ export class UserOptionComponent {
 
     this.userService.getOneUser(this.loggedInId);
     this.userService.user.subscribe((user) => {
-      this.getPicUrl();
+      if (user.profilePicturePath) {
+        this.imageUrl = user.profilePicturePath;
+      }
 
       const jsDate = moment(user.birthDate, 'jYYYY/jMM/jDD').toDate();
       this.reactiveForm.patchValue({
@@ -51,11 +53,7 @@ export class UserOptionComponent {
   getPicUrl() {
     this.userService.getOneUser(this.loggedInId);
     this.userService.user.subscribe((user) => {
-      // console.log(user.profilePicturePath);
-
       if (user.profilePicturePath) {
-        // console.log(user.profilePicturePath);
-
         this.imageUrl = user.profilePicturePath;
       }
     });

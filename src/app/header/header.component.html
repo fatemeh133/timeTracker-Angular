@@ -8,11 +8,15 @@
     />
   </span>
   <img
-    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQnO7QLbgqxCIswhJPOO0750lzSDeSD4k5L_2ahBU9ew&s"
+    [src]="
+      imageUrl ||
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQnO7QLbgqxCIswhJPOO0750lzSDeSD4k5L_2ahBU9ew&s'
+    "
     alt="user"
     class="user-icon me-auto"
     matTooltip="حساب کاربری "
     [matMenuTriggerFor]="usermenu"
+    *ngIf="isLogedin"
   />
   <mat-menu #usermenu="matMenu">
     <button mat-menu-item routerLink="/option">ویرایش اطلاعات</button>

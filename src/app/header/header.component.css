@@ -19,7 +19,9 @@ header {
 .user-icon {
   border-radius: 50%;
   width: 40px;
+  height: 40px;
   opacity: 0.8;
+  overflow: hidden;
 }
 .user-icon:hover {
   cursor: pointer;

@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   isLogedin: boolean = false;
+  loggedInId!: number;
+  imageUrl: string | null = null;
 
   ngOnInit() {
     this.service.authchange.subscribe((res) => {
@@ -22,6 +24,17 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.loggedInId = Number(localStorage.getItem('logedUserId'));
+
+    this.service.getOneUser(this.loggedInId);
+    this.service.user.subscribe((user) => {
+      if (user.profilePicturePath) {
+        this.imageUrl = user.profilePicturePath;
+      }
+    });
+  }
+  
   onExit() {
     this.service.authchange.next(false);
     localStorage.removeItem('authchange');
