@@ -27,10 +27,12 @@ export class ConnectionService {
   >(null);
   Tasks = new Subject<Task[]>();
   users = new Subject<User[]>();
+  user = new Subject<User>();
   taskPosted = new EventEmitter<void>();
   taskDeleted = new EventEmitter<void>();
   taskUpdated = new EventEmitter<void>();
   userPost = new EventEmitter<void>();
+  userPuted = new EventEmitter<void>();
 
   constructor(
     private http: HttpClient,
@@ -42,6 +44,16 @@ export class ConnectionService {
     return this.http.get<User[]>(this.userUrl).subscribe({
       next: (res) => {
         this.users.next(res);
+      },
+      error: (err: any) => {
+        this.openSnackBar(err.message, 'بستن', 'error');
+      },
+    });
+  }
+  getOneUser(id: number) {
+    return this.http.get<User>(this.userUrl + '/' + id).subscribe({
+      next: (res) => {
+        this.user.next(res);
       },
       error: (err: any) => {
         this.openSnackBar(err.message, 'بستن', 'error');
@@ -60,6 +72,18 @@ export class ConnectionService {
         return throwError(err);
       })
     );
+  }
+
+  putUser(id: number, formData: FormData) {
+    return this.http.put<User>(this.userUrl + '/' + id, formData).subscribe({
+      next: () => {
+        this.openSnackBar('به روزرسانی با موفقیت انجام شد', 'بستن', 'success');
+        this.userPuted.emit();
+      },
+      error: (err) => {
+        this.openSnackBar(err.message, 'بستن', 'error');
+      },
+    });
   }
 
   getTask() {

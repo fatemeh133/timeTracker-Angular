@@ -6,21 +6,29 @@ mat-form-field {
 }
 .user-icon {
   border: 2px solid #b3b3b3;
-  border-radius: 50%;
   margin: 10px;
   width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 .container {
   max-width: 900px;
+}
+.pic-container {
+  position: relative;
 }
 .camera-icon {
   width: 50px;
   border-radius: 50%;
   border: 4px solid white;
   position: absolute;
-  right: 31%;
-  top: 36%;
+  right: 137px;
+  top: 134px;
 }
 .camera-icon:hover {
   cursor: pointer;
+}
+.file-name {
+  margin-top: 15px;
 }

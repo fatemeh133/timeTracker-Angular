@@ -1,9 +1,12 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <div>
+      <div class="pic-container">
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQnO7QLbgqxCIswhJPOO0750lzSDeSD4k5L_2ahBU9ew&s"
+          [src]="
+            imageUrl ||
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQnO7QLbgqxCIswhJPOO0750lzSDeSD4k5L_2ahBU9ew&s'
+          "
           alt="user"
           class="user-icon me-3"
         />
@@ -15,15 +18,21 @@
         />
       </div>
 
-      <input
-        type="file"
-        id="profilePicture"
-        (change)="onFileSelected($event)"
-      />
-      <button mat-flat-button color="primary" class="ms-2">آپلود عکس</button>
+      <button
+        mat-flat-button
+        color="primary"
+        class="ms-2"
+        (click)="triggerInput()"
+      >
+        آپلود عکس
+      </button>
       <button mat-stroked-button>حذف عکس</button>
     </div>
+    <span *ngIf="selectedFileName" class="file-name"
+      >نام فایل: {{ selectedFileName }}</span
+    >
     <div class="col"></div>
+
     <div class="col"></div>
   </div>
 </div>
@@ -36,6 +45,14 @@
   <div class="container">
     <div class="row">
       <div class="col">
+        <input
+          type="file"
+          id="profilePicture"
+          formControlName="profilePicture"
+          (change)="onFileChange($event)"
+          #fileInput
+          style="display: none"
+        />
         <mat-form-field>
           <mat-label>نام </mat-label>
           <input
