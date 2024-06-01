@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { User } from '../models/user';
 import {
@@ -33,6 +33,7 @@ export class ConnectionService {
   taskUpdated = new EventEmitter<void>();
   userPost = new EventEmitter<void>();
   userPuted = new EventEmitter<void>();
+  userPicDeleted = new EventEmitter<void>();
 
   constructor(
     private http: HttpClient,
@@ -84,6 +85,22 @@ export class ConnectionService {
         this.openSnackBar(err.message, 'بستن', 'error');
       },
     });
+  }
+  deleteImage(imagePath: string) {
+    this.http
+      .delete<any>(this.userUrl, {
+        params: new HttpParams().set('imagePath', imagePath),
+      })
+      .subscribe({
+        next: () => {
+          this.openSnackBar('با موفقیت حذف شد', 'بستن', 'success');
+          this.userPicDeleted.emit();
+        },
+        error: (err: any) => {
+          this.openSnackBar(err.message, 'بستن', 'error');
+          console.log(err);
+        },
+      });
   }
 
   getTask() {

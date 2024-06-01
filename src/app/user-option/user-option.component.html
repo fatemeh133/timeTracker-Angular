@@ -27,7 +27,13 @@
       >
         آپلود عکس
       </button>
-      <button mat-stroked-button (click)="deletepic()">حذف عکس</button>
+      <button
+        mat-stroked-button
+        (click)="deletepic()"
+        [disabled]="reactiveForm.get('profilePicture') === null"
+      >
+        حذف عکس
+      </button>
     </div>
     <span *ngIf="selectedFileName" class="file-name"
       >نام فایل: {{ selectedFileName }}</span
@@ -150,6 +156,7 @@
         color="primary"
         class="mx-auto"
         [disabled]="reactiveForm.invalid"
+
       >
         ثبت تغیرات
       </button>

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { codeMeliValidator } from '../validator/CodeMeli.validator';
 import { ConnectionService } from '../services/connection.service';
 import moment from 'jalali-moment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-option',
@@ -10,13 +11,17 @@ import moment from 'jalali-moment';
   styleUrl: './user-option.component.css',
 })
 export class UserOptionComponent {
-  constructor(private userService: ConnectionService) {}
+  constructor(
+    private userService: ConnectionService,
+    private http: HttpClient
+  ) {}
   reactiveForm!: FormGroup;
   loggedInId!: number;
   usernames: string[] = [];
   codemelies: string[] = [];
   imageUrl: string | null = null;
   @ViewChild('fileInput') fileInput!: ElementRef;
+
   selectedFileName!: string;
 
   ngOnInit() {
@@ -70,8 +75,23 @@ export class UserOptionComponent {
     }
   }
   deletepic() {
-    this.reactiveForm.patchValue({
-      profilePicture: null,
+    const parts = this.imageUrl!.split('/');
+    const fileName = parts[parts.length - 1];
+    this.userService.deleteImage(fileName);
+
+    this.userService.userPicDeleted.subscribe((data) => {
+      //getPicUrl
+      this.userService.getOneUser(this.loggedInId);
+      this.userService.user.subscribe((user) => {
+        if (user.profilePicturePath === null) {
+          this.imageUrl = user.profilePicturePath;
+        }
+      });
+      this.reactiveForm.patchValue({
+        profilePicture: null,
+      });
+      this.selectedFileName = '';
+
     });
   }
 
