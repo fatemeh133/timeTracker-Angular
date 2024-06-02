@@ -92,6 +92,7 @@ export class TaskComponent implements AfterViewInit, OnInit {
     isChecked: false,
     date: '',
   };
+  tasks!: Array<any>;
 
   timers: {
     timerValue: number;
@@ -151,6 +152,24 @@ export class TaskComponent implements AfterViewInit, OnInit {
       this.userIdRecived = userId;
     });
     this.fillTalbeByUserTasks();
+
+    this.service.getTask();
+    this.service.Tasks.subscribe((res) => {
+      this.tasks = [];
+      for (let i = 0; i < res.length; i++) {
+        if (this.userIdRecived == res[i].userId) {
+          this.tasks.push({
+            taskName: res[i].taskName,
+            duration: res[i].duration,
+            taskId: res[i].taskId!,
+            isChecked: res[i].isChecked,
+            date: res[i].date,
+          });
+        }
+      }
+      console.log(this.tasks);
+    });
+    console.log('element', this.task);
   }
 
   getDateFormat(uDate: any, option: any) {
@@ -193,7 +212,7 @@ export class TaskComponent implements AfterViewInit, OnInit {
     duration: any,
     id: any,
     isChecked: boolean,
-    date: string
+    date: any
   ) {
     this.task.taskName = event.innerText;
     this.task.duration = duration;
@@ -207,13 +226,14 @@ export class TaskComponent implements AfterViewInit, OnInit {
     this.updateTask(id, this.task);
   }
 
-  updateDurationByRecord(name: any, duration: any, id: any) {
+  updateDurationByRecord(name: any, duration: any, id: any, date: string) {
     this.task.taskName = name;
     this.task.duration = duration;
     this.task.taskId = id;
     this.service.logedUserId.subscribe((res) => {
       this.task.userId = res!;
     });
+    this.task.date = date;
 
     this.updateTask(id, this.task);
   }
@@ -283,7 +303,7 @@ export class TaskComponent implements AfterViewInit, OnInit {
     }
   }
 
-  toggleTimer(index: number, name: any, id: any) {
+  toggleTimer(index: number, name: any, id: any, date: any) {
     if (this.timers[index].isTimerRunning) {
       // Stop the timer when its running
       this.timers[index].timerSubscription.unsubscribe();
@@ -291,7 +311,8 @@ export class TaskComponent implements AfterViewInit, OnInit {
       this.updateDurationByRecord(
         name,
         this.timers[index].timerValue.toString(),
-        id
+        id,
+        date
       );
     } else {
       // Start the timer when timer is'nt running
