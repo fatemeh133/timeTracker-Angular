@@ -20,7 +20,7 @@
   />
   <mat-menu #usermenu="matMenu">
     <button mat-menu-item routerLink="/option">ویرایش اطلاعات</button>
-    <button mat-menu-item>خروج</button>
+    <button mat-menu-item routerLink="/home" (click)="onExit()">خروج</button>
   </mat-menu>
   <span class="desktop-header" fxHide.lt-sm>
     <button

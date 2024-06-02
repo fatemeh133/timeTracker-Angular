@@ -156,7 +156,8 @@ export class ConnectionService {
       this.authchange.next(true);
 
       this.logedUserId.next(Number(localStorage.getItem('logedUserId')));
-      this.router.navigate(['/task']);
+
+      this.router.navigate([localStorage.getItem('currentRoute')]);
     } else {
       this.authchange.next(false);
     }

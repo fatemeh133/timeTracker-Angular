@@ -109,7 +109,9 @@ export class TaskComponent implements AfterViewInit, OnInit {
     });
 
     this.fadeInState = 'in';
+    localStorage.setItem('currentRoute', '/task');
   }
+
   onsubmit(form: FormGroup) {
     // console.log('task', this.task);
     const today = Date.now();

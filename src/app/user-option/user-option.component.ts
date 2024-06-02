@@ -33,6 +33,7 @@ export class UserOptionComponent {
       password: new FormControl('', Validators.required),
       profilePicture: new FormControl(''),
     });
+    localStorage.setItem('currentRoute', '/option');
   }
 
   ngAfterViewInit() {
@@ -91,7 +92,6 @@ export class UserOptionComponent {
         profilePicture: null,
       });
       this.selectedFileName = '';
-
     });
   }
 
