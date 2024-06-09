@@ -52,14 +52,16 @@ export class ConnectionService {
     });
   }
   getOneUser(id: number) {
-    return this.http.get<User>(this.userUrl + '/' + id).subscribe({
-      next: (res) => {
-        this.user.next(res);
-      },
-      error: (err: any) => {
-        this.openSnackBar(err.message, 'بستن', 'error');
-      },
-    });
+    if (localStorage.getItem('logedUserId')) {
+      return this.http.get<User>(this.userUrl + '/' + id).subscribe({
+        next: (res) => {
+          this.user.next(res);
+        },
+        error: (err: any) => {
+          this.openSnackBar(err.message + 'خطای دریافت کاربر', 'بستن', 'error');
+        },
+      });
+    } else return null;
   }
 
   postUser(formData: FormData): Observable<User> {

@@ -15,3 +15,8 @@ button {
 .padding-input-rtl {
   padding-right: 15px !important;
 }
+::ng-deep .mat-mdc-progress-spinner {
+  width: 50px !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}

@@ -13,15 +13,6 @@ export class RegisterComponent implements OnInit {
   constructor(private userService: ConnectionService) {}
 
   reactiveForm!: FormGroup;
-  // user: User = {
-  //   nameOfUser: '',
-  //   codeMeli: '',
-  //   userName: '',
-  //   birthDate: '',
-  //   password: '',
-  //   profilePicture: null,
-  //   profilePicturePath: '',
-  // };
 
   usernames: string[] = [];
   codemelies: string[] = [];

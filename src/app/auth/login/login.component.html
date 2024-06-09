@@ -20,9 +20,11 @@
       color="primary"
       class="mx-auto"
       [disabled]="reactiveForm.invalid"
+      *ngIf="!isLoading"
     >
       ورود
     </button>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
   </section>
 
   <a routerLink="/register" class="text-center mt-3">

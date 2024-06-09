@@ -18,6 +18,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [],
@@ -40,6 +42,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatToolbarModule,
     MatCheckboxModule,
     MatTabsModule,
+    MatProgressSpinnerModule,
+    DragDropModule,
   ],
   exports: [
     CommonModule,
@@ -60,6 +64,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatToolbarModule,
     MatCheckboxModule,
     MatTabsModule,
+    MatProgressSpinnerModule,
+    DragDropModule,
   ],
   providers: [provideNativeDateAdapter()],
 })
