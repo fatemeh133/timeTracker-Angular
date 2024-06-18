@@ -1,9 +1,12 @@
 header {
-  background-color: rgb(155, 106, 187);
+  background-color: rgb(192 191 255);
   padding: 10px;
 }
 .menu-btn {
-  color: wheat !important;
+  color: white !important;
+}
+.menu-btn:hover {
+  color: #7569b0 !important;
 }
 
 .material-symbols-outlined {
@@ -24,4 +27,7 @@ header {
 }
 .user-icon:hover {
   cursor: pointer;
+}
+.icon {
+  width: 120px;
 }
