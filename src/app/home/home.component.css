@@ -1,0 +1,36 @@
+.subtitle {
+  max-width: 50%;
+  margin: auto;
+  margin-bottom: 30px;
+}
+::ng-deep app-home .mdc-button {
+  background-color: #7569b0 !important;
+  color: white !important;
+}
+::ng-deep app-home .mdc-button:hover {
+  background-color: #e54343 !important;
+}
+.themeColor {
+  color: #7569b0;
+}
+.feature {
+  padding: 30px;
+  margin: 20px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px #cdcdcd;
+  direction: rtl;
+  width: 230px;
+}
+h2 {
+  text-align: center;
+  margin-top: 20px;
+}
+.row {
+  margin: auto;
+}
+@media (min-width: 768px) {
+  .col-md-3 {
+    flex: 0 0 auto;
+    width: 20%;
+  }
+}
