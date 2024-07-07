@@ -49,11 +49,40 @@
     ><app-header></app-header>
 
     <div class="container">
-      @defer {
+      @defer(on timer(2s)) {
       <router-outlet></router-outlet>
-      }@loading {
+      }@placeholder {
+      <ng-container [ngSwitch]="currentRoute">
+        <div *ngSwitchCase="'home'" class="placeholder-glow m-5">
+          <div class="d-block mx-auto text-center mt-5">
+            <h1 class="placeholder col-4 placeholder-lg"></h1>
+
+            <span class="placeholder col-7"></span>
+            <span class="placeholder col-4"></span>
+            <span class="placeholder col-4"></span>
+            <span class="placeholder col-6"></span>
+            <span class="placeholder col-8"></span>
+            <a
+              href="#"
+              tabindex="-1"
+              class="btn btn-primary disabled placeholder col-6"
+            ></a>
+          </div>
+        </div>
+        <p *ngSwitchCase="'login'" class="card-text placeholder-glow m-5">
+          <span class="placeholder col-5"></span>
+        </p>
+        <p *ngSwitchCase="'option'" class="card-text placeholder-glow m-5">
+          <span class="placeholder col-7"></span>
+          <span class="placeholder col-4"></span>
+          <span class="placeholder col-4"></span>
+          <span class="placeholder col-6"></span>
+          <span class="placeholder col-8"></span>
+        </p>
+      </ng-container>
+      } @loading {
       <p>Loading...</p>
-      }
+      }@error { Something went wrong :( }
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

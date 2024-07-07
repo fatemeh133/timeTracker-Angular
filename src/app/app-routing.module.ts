@@ -8,16 +8,16 @@ import { authGuard, Premissionservices } from './services/auth.guard';
 import { UserOptionComponent } from './user-option/user-option.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent,   data: { placeholder: 'home' } },
+  { path: 'register', component: RegisterComponent,   data: { placeholder: 'register' } },
+  { path: 'login', component: LoginComponent,   data: { placeholder: 'login' } },
   {
     path: 'task',
     component: TaskComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard],   data: { placeholder: 'task' }
   },
-  { path: 'home', component: HomeComponent },
-  { path: 'option', component: UserOptionComponent, canActivate: [authGuard] },
+  { path: 'home', component: HomeComponent,   data: { placeholder: 'home' } },
+  { path: 'option', component: UserOptionComponent, canActivate: [authGuard],   data: { placeholder: 'option' } },
 ];
 
 @NgModule({

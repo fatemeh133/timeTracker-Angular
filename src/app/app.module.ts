@@ -31,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { PersianPaginatior } from './task/translate-Pagination';
 import { UserOptionComponent } from './user-option/user-option.component';
+import { PlaceholderComponent } from './placeholder/placeholder.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { UserOptionComponent } from './user-option/user-option.component';
     CencelDialogComponent,
     SnackbarComponent,
     UserOptionComponent,
+    PlaceholderComponent,
   ],
   imports: [
     BrowserModule,
