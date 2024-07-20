@@ -55,18 +55,43 @@
       <ng-container [ngSwitch]="currentRoute">
         <div *ngSwitchCase="'home'" class="placeholder-glow m-5">
           <div class="d-block mx-auto text-center mt-5">
-            <h1 class="placeholder col-4 placeholder-lg"></h1>
+            <h1
+              class="placeholder col-2 placeholder-lg"
+              style="
+                width: 160px;
+                display: block;
+                margin: auto;
+                margin-bottom: 10px;
+              "
+            ></h1>
 
             <span class="placeholder col-7"></span>
             <span class="placeholder col-4"></span>
             <span class="placeholder col-4"></span>
             <span class="placeholder col-6"></span>
-            <span class="placeholder col-8"></span>
+
             <a
               href="#"
               tabindex="-1"
+              style="
+                width: 150px;
+                background-color: #7569b0;
+                display: block;
+                margin: auto;
+                margin-top: 10px;
+              "
               class="btn btn-primary disabled placeholder col-6"
             ></a>
+
+            <h1
+              class="placeholder col-2 placeholder-lg"
+              style="
+                width: 160px;
+                display: block;
+                margin: auto;
+                margin-top: 100px;
+              "
+            ></h1>
           </div>
         </div>
         <p *ngSwitchCase="'login'" class="card-text placeholder-glow m-5">

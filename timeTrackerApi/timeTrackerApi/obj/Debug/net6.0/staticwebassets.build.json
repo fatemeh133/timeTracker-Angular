@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "Hash": "71b0FUOLUF9rU/w46W8ovLaqM/rVRay3OQuAEL8j5sY=",
+  "Source": "timeTrackerApi",
+  "BasePath": "_content/timeTrackerApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "timeTrackerApi\\wwwroot",
+      "Source": "timeTrackerApi",
+      "ContentRoot": "C:\\Users\\f.agaahmadi\\Desktop\\timeTrackerApi\\timeTrackerApi\\wwwroot\\",
+      "BasePath": "_content/timeTrackerApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\f.agaahmadi\\Desktop\\timeTrackerApi\\timeTrackerApi\\wwwroot\\images\\de534897-cb60-4c7b-9cf4-5209caf7c446_555.png",
+      "SourceId": "timeTrackerApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\f.agaahmadi\\Desktop\\timeTrackerApi\\timeTrackerApi\\wwwroot\\",
+      "BasePath": "_content/timeTrackerApi",
+      "RelativePath": "images/de534897-cb60-4c7b-9cf4-5209caf7c446_555.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\de534897-cb60-4c7b-9cf4-5209caf7c446_555.png"
+    },
+    {
+      "Identity": "C:\\Users\\f.agaahmadi\\Desktop\\timeTrackerApi\\timeTrackerApi\\wwwroot\\images\\f9851cf2-e703-4474-9883-06339b2475dd_flat-business-man-user-profile-avatar-icon-vector-4333097.jpg",
+      "SourceId": "timeTrackerApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\f.agaahmadi\\Desktop\\timeTrackerApi\\timeTrackerApi\\wwwroot\\",
+      "BasePath": "_content/timeTrackerApi",
+      "RelativePath": "images/f9851cf2-e703-4474-9883-06339b2475dd_flat-business-man-user-profile-avatar-icon-vector-4333097.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\f9851cf2-e703-4474-9883-06339b2475dd_flat-business-man-user-profile-avatar-icon-vector-4333097.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\f.agaahmadi\\Desktop\\timeTrackerApi\\timeTrackerApi\\wwwroot\\images\\user.png",
+      "SourceId": "timeTrackerApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\f.agaahmadi\\Desktop\\timeTrackerApi\\timeTrackerApi\\wwwroot\\",
+      "BasePath": "_content/timeTrackerApi",
+      "RelativePath": "images/user.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\user.png"
+    }
+  ]
+}
